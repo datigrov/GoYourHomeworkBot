@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
-
     private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
 
     @Autowired
@@ -28,7 +27,20 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     public int process(List<Update> updates) {
         updates.forEach(update -> {
             logger.info("Processing update: {}", update);
-            // Process your updates here
+
+            String textMessage = update.message().text();
+            long chatId = update.message().chat().id();
+
+//            String responseText;
+//            switch (textMessage) {
+//                case "/start" -> responseText = String.format("Hi!");
+//                case "/stop" -> responseText = String.format("Goodbye!");
+//                default -> responseText = "I dont understand";
+//            }
+
+            if (update.)
+
+
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
