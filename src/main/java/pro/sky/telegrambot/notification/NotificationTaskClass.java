@@ -4,18 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import pro.sky.telegrambot.repository.NotificationRepository;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class NotificationTaskClass {
+public class NotificationTaskClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long chatId;
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTimeNotification;
     private String notificationMessage;
 
     @Override
@@ -23,12 +24,12 @@ public class NotificationTaskClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NotificationTaskClass that = (NotificationTaskClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(chatId, that.chatId) && Objects.equals(localDateTime, that.localDateTime) && Objects.equals(notificationMessage, that.notificationMessage);
+        return Objects.equals(id, that.id) && Objects.equals(chatId, that.chatId) && Objects.equals(localDateTimeNotification, that.localDateTimeNotification) && Objects.equals(notificationMessage, that.notificationMessage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, chatId, localDateTime, notificationMessage);
+        return Objects.hash(id, chatId, localDateTimeNotification, notificationMessage);
     }
 
     public String getNotificationMessage() {
@@ -52,17 +53,17 @@ public class NotificationTaskClass {
         return "NotificationTaskClass{" +
                 "id=" + id +
                 ", chatId=" + chatId +
-                ", localDateTime=" + localDateTime +
+                ", localDateTimeNotification=" + localDateTimeNotification +
                 ", notificationMessage='" + notificationMessage + '\'' +
                 '}';
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getLocalDateTimeNotification() {
+        return localDateTimeNotification;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setLocalDateTimeNotification(LocalDateTime localDateTimeNotification) {
+        this.localDateTimeNotification = localDateTimeNotification;
     }
 
     public Long getChatId() {

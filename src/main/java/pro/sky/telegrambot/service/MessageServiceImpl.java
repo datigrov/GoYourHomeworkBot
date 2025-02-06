@@ -1,4 +1,4 @@
-package pro.sky.telegrambot;
+package pro.sky.telegrambot.service;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
-
-import java.util.regex.Pattern;
 
 
 @Service
