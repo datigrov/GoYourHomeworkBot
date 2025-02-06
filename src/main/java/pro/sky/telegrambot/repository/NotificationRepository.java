@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationTaskClass, Long> {
-    @Query("SELECT notification_task_class FROM NotificationTaskClass WHERE notification_task_class.localDateTime = :localDateTime")
+    @Query("SELECT nt FROM NotificationTaskClass nt WHERE nt.localDateTime = :localDateTime")
     List<NotificationTaskClass> findByNotificationTask(@Param("localDateTime") LocalDateTime localDateTimeNotification);
 }
