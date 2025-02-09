@@ -1,6 +1,6 @@
 package pro.sky.telegrambot;
-
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.notification.NotificationTaskClass;
@@ -13,29 +13,29 @@ import java.util.List;
 
 @Service
 public class SendingNotification {
-
+    private Logger logger = LoggerFactory.getLogger(SendingNotification.class);
     private final NotificationRepository runNotificationRepository;
     private final MessageServiceImpl messageService;
-    private final NotificationTaskClass notificationTaskClass;
 
     public SendingNotification(NotificationRepository runNotificationRepository,
-                               MessageServiceImpl messageService,
-                               NotificationTaskClass notificationTaskClass) {
+                               MessageServiceImpl messageService) {
         this.runNotificationRepository = runNotificationRepository;
         this.messageService = messageService;
-        this.notificationTaskClass = notificationTaskClass;
     }
 
     @Scheduled(fixedDelay = 60000)
     public void runNotification() {
         LocalDateTime runLocalDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         List<NotificationTaskClass> notificationRunListMessages =
-                runNotificationRepository.findByNotificationTask(runLocalDateTime);
+                runNotificationRepository.findByLocalDateTimeNotification(runLocalDateTime);
 
-        messageService.info(
-                notificationTaskClass.getNotificationMessage(),
-                notificationTaskClass.getChatId()
-        );
+        logger.info("We have {} notification tasks", notificationRunListMessages.size());
+        for (NotificationTaskClass notificationRunListMessage : notificationRunListMessages) {
+            messageService.info(
+                    notificationRunListMessage.getNotificationMessage(),
+                    notificationRunListMessage.getChatId());
+        }
+
 
     }
 }

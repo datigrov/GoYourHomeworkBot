@@ -4,13 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import pro.sky.telegrambot.repository.NotificationRepository;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class NotificationTaskClass{
+public class NotificationTaskClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

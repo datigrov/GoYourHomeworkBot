@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.service.MessageServiceImpl;
-import pro.sky.telegrambot.notification.NotificationTaskClass;
+import pro.sky.telegrambot.notification.NotificationTask;
 import pro.sky.telegrambot.repository.NotificationRepository;
 
 import java.time.LocalDateTime;
@@ -59,7 +59,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             } else {
                 Matcher matcher = patternMessage.matcher(textMessage);
                 if (matcher.matches()) {
-                    NotificationTaskClass notificationTaskClass = new NotificationTaskClass();
+                    NotificationTask notificationTaskClass = new NotificationTask();
                     notificationTaskClass.setId(chatId);
                     notificationTaskClass.setNotificationMessage(matcher.group(3));
                     notificationTaskClass.setLocalDateTimeNotification(LocalDateTime.parse(matcher.group(1),DATE_TIME));
