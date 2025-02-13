@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.notification.NotificationTaskClass;
 import pro.sky.telegrambot.repository.NotificationRepository;
 import pro.sky.telegrambot.service.MessageServiceImpl;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -27,15 +26,13 @@ public class SendingNotification {
     public void runNotification() {
         LocalDateTime runLocalDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         List<NotificationTaskClass> notificationRunListMessages =
-                runNotificationRepository.findByLocalDateTimeNotification(runLocalDateTime);
+                runNotificationRepository.findAllByNotificationLocalDateTime(runLocalDateTime);
 
         logger.info("We have {} notification tasks", notificationRunListMessages.size());
-        for (NotificationTaskClass notificationRunListMessage : notificationRunListMessages) {
-            messageService.info(
-                    notificationRunListMessage.getNotificationMessage(),
-                    notificationRunListMessage.getChatId());
+
+        for (NotificationTaskClass notificationTaskClassMessage : notificationRunListMessages) {
+            messageService.info(notificationTaskClassMessage.getChatId(),
+                    notificationTaskClassMessage.getNotificationMessage());
         }
-
-
     }
 }

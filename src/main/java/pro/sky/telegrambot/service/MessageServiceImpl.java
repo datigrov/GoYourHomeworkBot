@@ -12,21 +12,20 @@ import pro.sky.telegrambot.listener.TelegramBotUpdatesListener;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    private TelegramBot telegramBot;
-    private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
+    private final TelegramBot telegramBot;
+    private final Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
 
     public MessageServiceImpl(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
 
-
     @Override
-    public void info(String messageText, long chatId) {
+    public void info(long chatId, String messageText) {
         SendMessage message = new SendMessage(chatId, messageText);
         SendResponse response = telegramBot.execute(message);
 
         if (response.isOk()) {
-            logger.info("message {} and id {}", messageText, chatId);
+            logger.info("message {} and id {}", message, chatId);
         } else {
             logger.warn("Something is wrong");
         }

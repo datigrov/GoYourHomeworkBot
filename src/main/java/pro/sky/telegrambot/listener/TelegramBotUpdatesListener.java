@@ -6,10 +6,9 @@ import com.pengrad.telegrambot.model.Update;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pro.sky.telegrambot.notification.NotificationTaskClass;
 import pro.sky.telegrambot.service.MessageServiceImpl;
-import pro.sky.telegrambot.notification.NotificationTask;
 import pro.sky.telegrambot.repository.NotificationRepository;
 
 import java.time.LocalDateTime;
@@ -26,10 +25,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final DateTimeFormatter DATE_TIME = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     private final String RESPONSE_TEXT = "HI, im your telegram bot";
     private final String WRONG_ON_TEXT = "Wrong message";
-    private final String endMessage = "Notification is added";
-
-    @Autowired
+    private final String sendMessage = "Notification is added";
     private MessageServiceImpl service;
+    private TelegramBot telegramBot;
 
     public TelegramBotUpdatesListener(NotificationRepository notificationRepository,
                                       MessageServiceImpl service, TelegramBot telegramBot) {
@@ -37,10 +35,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         this.service = service;
         this.telegramBot = telegramBot;
     }
-
-    @Autowired
-    private TelegramBot telegramBot;
-
     @PostConstruct
     public void init() {
         telegramBot.setUpdatesListener(this);
@@ -54,19 +48,21 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             String textMessage = update.message().text();
             long chatId = update.message().chat().id();
 
-            if (textMessage.equals("/start")) {
-                service.info(RESPONSE_TEXT,chatId);
+            if ("/start".equals(textMessage)) {
+                service.info(chatId,RESPONSE_TEXT);
             } else {
                 Matcher matcher = patternMessage.matcher(textMessage);
                 if (matcher.matches()) {
-                    NotificationTask notificationTaskClass = new NotificationTask();
-                    notificationTaskClass.setId(chatId);
+                    NotificationTaskClass notificationTaskClass = new NotificationTaskClass();
+                    notificationTaskClass.setChatId(chatId);
                     notificationTaskClass.setNotificationMessage(matcher.group(3));
-                    notificationTaskClass.setLocalDateTimeNotification(LocalDateTime.parse(matcher.group(1),DATE_TIME));
+                    notificationTaskClass.setNotificationLocalDateTime(
+                            LocalDateTime.parse(matcher.group(1),DATE_TIME));
                     notificationTaskClass = notificationRepository.save(notificationTaskClass);
-                    service.info(endMessage, chatId);
+                    service.info(chatId, sendMessage);
+                    logger.info("New notification with id - {}",notificationTaskClass.getId());
                 }else {
-                    service.info(WRONG_ON_TEXT,chatId);
+                    service.info(chatId,WRONG_ON_TEXT);
                 }
             }
         });

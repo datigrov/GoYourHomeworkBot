@@ -15,29 +15,8 @@ public class NotificationTaskClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long chatId;
-    private LocalDateTime localDateTimeNotification;
+    private LocalDateTime notificationLocalDateTime;
     private String notificationMessage;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NotificationTaskClass that = (NotificationTaskClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(chatId, that.chatId) && Objects.equals(localDateTimeNotification, that.localDateTimeNotification) && Objects.equals(notificationMessage, that.notificationMessage);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, chatId, localDateTimeNotification, notificationMessage);
-    }
-
-    public String getNotificationMessage() {
-        return notificationMessage;
-    }
-
-    public void setNotificationMessage(String notificationMessage) {
-        this.notificationMessage = notificationMessage;
-    }
 
     public Long getId() {
         return id;
@@ -45,24 +24,6 @@ public class NotificationTaskClass {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "NotificationTaskClass{" +
-                "id=" + id +
-                ", chatId=" + chatId +
-                ", localDateTimeNotification=" + localDateTimeNotification +
-                ", notificationMessage='" + notificationMessage + '\'' +
-                '}';
-    }
-
-    public LocalDateTime getLocalDateTimeNotification() {
-        return localDateTimeNotification;
-    }
-
-    public void setLocalDateTimeNotification(LocalDateTime localDateTimeNotification) {
-        this.localDateTimeNotification = localDateTimeNotification;
     }
 
     public Long getChatId() {
@@ -73,4 +34,42 @@ public class NotificationTaskClass {
         this.chatId = chatId;
     }
 
+    public LocalDateTime getNotificationLocalDateTime() {
+        return notificationLocalDateTime;
+    }
+
+    public void setNotificationLocalDateTime(LocalDateTime notificationLocalDateTime) {
+        this.notificationLocalDateTime = notificationLocalDateTime;
+    }
+
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NotificationTaskClass that = (NotificationTaskClass) o;
+        return Objects.equals(id, that.id) && Objects.equals(chatId, that.chatId) && Objects.equals(notificationLocalDateTime, that.notificationLocalDateTime) && Objects.equals(notificationMessage, that.notificationMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, chatId, notificationLocalDateTime, notificationMessage);
+    }
+
+    @Override
+    public String toString() {
+        return "NotificationTaskClass{" +
+                "id=" + id +
+                ", chatId=" + chatId +
+                ", notificationLocalDateTime=" + notificationLocalDateTime +
+                ", notificationMessage='" + notificationMessage + '\'' +
+                '}';
+    }
 }
